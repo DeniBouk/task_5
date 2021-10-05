@@ -13,6 +13,13 @@ class ContactPage extends StatelessWidget {
         ),
       ),
       body: ContactContent(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        child: const Icon(
+          Icons.add,
+        ),
+        tooltip: "Add account",
+      ),
     );
   }
 }
