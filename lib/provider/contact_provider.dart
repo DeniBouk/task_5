@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '/model/contact.dart';
 
 class ContactProvider extends ChangeNotifier {
