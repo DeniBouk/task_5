@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:task_5/model/contact.dart';
+import 'package:task_5/provider/contact_provider.dart';
 
 class SimpleInput extends StatelessWidget {
   TextEditingController namaController = TextEditingController();
@@ -6,9 +9,21 @@ class SimpleInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Object? args = ModalRoute.of(context)?.settings.arguments;
+    int? index;
+    Contact? contact;
+    if (args is Map<String, dynamic>) {
+      if (args['index'] is int && args['contact'] is Contact) {
+        index = args['index'];
+        contact = args['contact'];
+        namaController.text = contact!.contactName;
+        nomorController.text = contact.contactNumber;
+      }
+    }
+
     return Scaffold(
         appBar: AppBar(
-          title: Text('TASK 4'),
+          title: const Text('Contact Editor'),
         ),
         body: Column(
           children: <Widget>[
@@ -16,7 +31,7 @@ class SimpleInput extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: namaController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   suffixIcon: Icon(
                     Icons.account_circle_outlined,
                   ),
@@ -28,7 +43,7 @@ class SimpleInput extends StatelessWidget {
               padding: const EdgeInsets.all(8.0),
               child: TextField(
                 controller: nomorController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   suffixIcon: Icon(
                     Icons.phone_outlined,
                   ),
@@ -41,17 +56,35 @@ class SimpleInput extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: ElevatedButton(
-                    // Tombol Navigator ke New Screen
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => home(
-                                namaController.text, nomorController.text)),
+                  child: Consumer<ContactProvider>(
+                    builder: (
+                      BuildContext context,
+                      ContactProvider value,
+                      Widget? child,
+                    ) {
+                      return ElevatedButton(
+                        // Tombol Navigator ke New Screen
+                        onPressed: () {
+                          if (index != null) {
+                            value.editContact(
+                              index,
+                              Contact(
+                                  contactName: namaController.text,
+                                  contactNumber: nomorController.text),
+                            );
+                          } else {
+                            value.addContact(
+                              Contact(
+                                contactName: namaController.text,
+                                contactNumber: nomorController.text,
+                              ),
+                            );
+                          }
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Save'),
                       );
                     },
-                    child: Text('tambahkan'),
                   ),
                 ),
               ],

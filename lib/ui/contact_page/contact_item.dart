@@ -36,6 +36,7 @@ class ContactItem extends StatelessWidget {
               left: 8,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
                   contactName,

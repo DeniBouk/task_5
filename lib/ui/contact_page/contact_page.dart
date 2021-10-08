@@ -12,9 +12,11 @@ class ContactPage extends StatelessWidget {
           "My Contact",
         ),
       ),
-      body: ContactContent(),
+      body: const ContactContent(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/editor');
+        },
         child: const Icon(
           Icons.add,
         ),

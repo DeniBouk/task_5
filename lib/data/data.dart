@@ -4,9 +4,7 @@ class Data {
   List<Contact> data = <Contact>[];
 
   Data() {
-    data = ([
-      Contact(contactName: "contactName", contactNumber: "contactNumber"),
-    ]);
+    data = ([]);
   }
 
   List<Contact> getData() {
